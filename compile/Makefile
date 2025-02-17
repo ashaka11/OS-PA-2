@@ -49,7 +49,8 @@ SYS =	blkcmp.c	blkequ.c	main.c		stacktrace.c	\
 	signal.c	signaln.c	sleep.c		sleep10.c	\
 	sleep100.c	sleep1000.c	sreset.c	suspend.c	\
 	unsleep.c	userret.c	wait.c		wakeup.c	\
-	write.c		xdone.c		pci.c		shutdown.c
+	write.c		xdone.c		pci.c		shutdown.c \
+	lcreate.c	ldelete.c	linit.c		releaseall.c
 
 TTY =	ttyalloc.c	ttycntl.c	ttygetc.c	ttyiin.c	\
 	ttyinit.c	ttynew.c	ttyopen.c	ttyputc.c	\
@@ -410,7 +411,7 @@ init.o: ../sys/init.c /usr/include/stdc-predef.h ../h/conf.h \
 initialize.o: ../sys/initialize.c /usr/include/stdc-predef.h ../h/conf.h \
  ../h/i386.h ../h/kernel.h ../h/systypes.h ../h/mem.h ../h/mark.h \
  ../h/bufpool.h ../h/proc.h ../h/sem.h ../h/sleep.h ../h/tty.h ../h/q.h \
- ../h/io.h ../h/stdio.h
+ ../h/io.h ../h/stdio.h ../h/lock.h
 insert.o: ../sys/insert.c /usr/include/stdc-predef.h ../h/conf.h \
  ../h/kernel.h ../h/systypes.h ../h/mem.h ../h/q.h
 insertd.o: ../sys/insertd.c /usr/include/stdc-predef.h ../h/conf.h \
@@ -426,6 +427,9 @@ kprintf.o: ../sys/kprintf.c /usr/include/stdc-predef.h ../h/conf.h \
  ../h/kernel.h ../h/systypes.h ../h/mem.h ../h/tty.h
 kputc.o: ../sys/kputc.c /usr/include/stdc-predef.h ../h/conf.h \
  ../h/kernel.h ../h/systypes.h ../h/mem.h ../h/tty.h
+lcreate.o: ../sys/lcreate.c /usr/include/stdc-predef.h ../h/lock.h
+ldelete.o: ../sys/ldelete.c /usr/include/stdc-predef.h ../h/lock.h
+linit.o: ../sys/linit.c /usr/include/stdc-predef.h ../h/lock.h
 main.o: ../sys/main.c /usr/include/stdc-predef.h ../h/conf.h \
  ../h/kernel.h ../h/systypes.h ../h/mem.h ../h/proc.h ../h/stdio.h
 mark.o: ../sys/mark.c /usr/include/stdc-predef.h ../h/conf.h \
@@ -459,6 +463,7 @@ recvclr.o: ../sys/recvclr.c /usr/include/stdc-predef.h ../h/conf.h \
 recvtim.o: ../sys/recvtim.c /usr/include/stdc-predef.h ../h/conf.h \
  ../h/kernel.h ../h/systypes.h ../h/mem.h ../h/proc.h ../h/q.h \
  ../h/sleep.h ../h/stdio.h
+releaseall.o: ../sys/releaseall.c /usr/include/stdc-predef.h ../h/lock.h
 resched.o: ../sys/resched.c /usr/include/stdc-predef.h ../h/conf.h \
  ../h/kernel.h ../h/systypes.h ../h/mem.h ../h/proc.h ../h/q.h
 resume.o: ../sys/resume.c /usr/include/stdc-predef.h ../h/conf.h \

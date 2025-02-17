@@ -13,6 +13,7 @@
 #include <q.h>
 #include <io.h>
 #include <stdio.h>
+#include <lock.h>
 
 /*#define DETAIL */
 #define HOLESIZE	(600)	
@@ -176,6 +177,9 @@ LOCAL int sysinit()
 		(sptr = &semaph[i])->sstate = SFREE;
 		sptr->sqtail = 1 + (sptr->sqhead = newqueue());
 	}
+
+	/* initialize locks */
+	linit();
 
 	rdytail = 1 + (rdyhead=newqueue());/* initialize ready list */
 
