@@ -4,6 +4,7 @@
 #include <i386.h>
 #include <kernel.h>
 #include <proc.h>
+#include <lock.h>
 #include <sem.h>
 #include <mem.h>
 #include <io.h>
@@ -40,6 +41,7 @@ SYSCALL create(procaddr,ssize,priority,name,nargs,args)
 	if (((saddr = (unsigned long *)getstk(ssize)) ==
 	    (unsigned long *)SYSERR ) ||
 	    (pid=newpid()) == SYSERR || priority < 1 ) {
+			kprintf("[create] Returning due to error pid=%d priority: %d, saddr: %d ssize: %d\n", pid, priority, saddr, ssize);
 		restore(ps);
 		return(SYSERR);
 	}
@@ -71,6 +73,11 @@ SYSCALL create(procaddr,ssize,priority,name,nargs,args)
 	*saddr = MAGIC;
 	savsp = (unsigned long)saddr;
 
+	pptr->plockwaiting = -1;
+	for(i=0; i< 50; i++){
+		pptr->plockcurr[i]=0;
+	} 
+	
 	/* push arguments */
 	pptr->pargs = nargs;
 	a = (unsigned long *)(&args) + (nargs-1); /* last argument	*/
@@ -109,11 +116,13 @@ LOCAL int newpid()
 	int	pid;			/* process id to return		*/
 	int	i;
 
+	kprintf("[newpid] Finding new process id NPROC: %d\n", NPROC);
 	for (i=0 ; i<NPROC ; i++) {	/* check all NPROC slots	*/
 		if ( (pid=nextproc--) <= 0)
 			nextproc = NPROC-1;
 		if (proctab[pid].pstate == PRFREE)
 			return(pid);
 	}
+	kprintf("Could not find null slots\n");
 	return(SYSERR);
 }

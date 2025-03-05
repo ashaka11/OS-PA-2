@@ -9,6 +9,7 @@ extern	int	clkruns;	/* 1 iff clock exists; 0 otherwise	*/
 extern	int	clockq;		/* q index of sleeping process list	*/
 extern	int	count6;		/* used to ignore 5 of 6 interrupts	*/
 extern	int	count10;	/* used to ignore 9 of 10 ticks		*/
+extern	unsigned long	ctr1000;	/* counts in 1000ths of second	*/
 extern	unsigned long clktime;	/* current time in secs since 1/1/70	*/
 extern	int	clmutex;	/* mutual exclusion sem. for clock	*/
 extern	int	*sltop;		/* address of first key on clockq	*/

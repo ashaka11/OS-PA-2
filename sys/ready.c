@@ -18,6 +18,7 @@ int ready(int pid, int resch)
 	pptr = &proctab[pid];
 	pptr->pstate = PRREADY;
 	insert(pid,rdyhead,pptr->pprio);
+	kprintf("[Ready] Process %d added to ready queue\n", pid);
 	if (resch)
 		resched();
 	return(OK);

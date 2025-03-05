@@ -112,9 +112,12 @@ int nulluser()				/* babysit CPU when no one home */
 
 	open(CONSOLE, console_dev, 0);
 
+	kprintf("running main program\n");
+	
 	/* create a process to execute the user's main program */
         resume(create((int *)main,INITSTK,INITPRIO,INITNAME,INITARGS));
 
+	kprintf("nulluser exiting\n");
 	while (TRUE)
 		/* empty */;
 }
@@ -125,6 +128,7 @@ int nulluser()				/* babysit CPU when no one home */
  */
 LOCAL int sysinit()
 {
+	kprintf("sysinit()\n");
 	int	i,j;
 	struct	pentry	*pptr;
 	struct	sentry	*sptr;
@@ -180,6 +184,7 @@ LOCAL int sysinit()
 
 	/* initialize locks */
 	linit();
+	kprintf("locks initialized\n");
 
 	rdytail = 1 + (rdyhead=newqueue());/* initialize ready list */
 
